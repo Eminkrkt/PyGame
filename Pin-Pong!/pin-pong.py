@@ -45,7 +45,8 @@ BALL_Y = HEIGHT / 2
 BALL_DIRECTION_X = 1
 BALL_DIRECTION_Y = 1
 
-BALL_SPEED = 0.14
+#BALL_SPEED = 0.14
+BALL_SPEED = 0.9
 
 COMP_RACKET_Y = 1
 while GAME_STATE:
@@ -108,7 +109,6 @@ while GAME_STATE:
         BALL_DIRECTION_X *= -1
         BALL_SPEED += 0.02
 
-
     if (USER_POINT_VALUE == 3):
         WHO_WON = "usr"
         USER_SCORE = USER_POINT_VALUE
@@ -124,13 +124,31 @@ while GAME_STATE:
     
     pygame.display.update()
 
-# Finished game, last game info screen
 if (GAME_STATE == False):
     while True:
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 pygame.quit()
                 sys.exit()
-        
-        window.fill(GRAY)
+    
         pygame.display.update()
+
+        if WHO_WON == "usr":
+            win_text = font.render("You Win!", True, GREEN, GRAY)
+        else:
+            win_text = font.render("Computer Wins!", True, BLUE, GRAY)
+
+        win_text_rect = win_text.get_rect()
+        win_text_rect.center = (WIDTH / 2, HEIGHT / 2 - 50)
+
+        user_score_text = font.render("Your Score: " + str(USER_SCORE), True, GREEN, GRAY)
+        user_score_text_rect = user_score_text.get_rect()
+        user_score_text_rect.center = (WIDTH / 2, HEIGHT / 2)
+
+        comp_score_text = font.render("Computer Score: " + str(COMP_SCORE), True, BLUE, GRAY)
+        comp_score_text_rect = comp_score_text.get_rect()
+        comp_score_text_rect.center = (WIDTH / 2, HEIGHT / 2 + 50)
+
+        window.blit(win_text, win_text_rect)
+        window.blit(user_score_text, user_score_text_rect)
+        window.blit(comp_score_text, comp_score_text_rect)
